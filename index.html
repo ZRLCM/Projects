@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Website</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #0a264c;
+            transition: background-color 0.5s ease;
+        }
+
+        #colorMixer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="colorMixer"></canvas>
+    <script>
+        const colorMixer = document.getElementById('colorMixer');
+        const ctx = colorMixer.getContext('2d');
+
+        colorMixer.width = window.innerWidth;
+        colorMixer.height = window.innerHeight;
+
+        const black = { r: 0, g: 0, b: 0 };
+        const blue = { r: 34, g: 77, b: 123 };
+
+        const drawColorMixer = (ctx, color1, color2) => {
+            const grd = ctx.createLinearGradient(0, 0, window.innerWidth, window.innerHeight);
+            grd.addColorStop(0, `rgba(${color1.r}, ${color1.g}, ${color1.b}, 1)`);
+            grd.addColorStop(1, `rgba(${color2.r}, ${color2.g}, ${color2.b}, 1)`);
+            ctx.fillStyle = grd;
+            ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+        };
+
+        drawColorMixer(ctx, black, blue);
+
+        document.body.addEventListener('mousemove', (event) => {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            const pixelData = ctx.getImageData(mouseX, mouseY, 1, 1).data;
+            const rgbaColor = {
+                r: pixelData[0],
+                g: pixelData[1],
+                b: pixelData[2],
+                a: pixelData[3] / 255
+            };
+
+            document.body.style.backgroundColor = `rgba(${rgbaColor.r}, ${rgbaColor.g}, ${rgbaColor.b}, ${rgbaColor.a})`;
+        });
+    </script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">My Personal Website</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#projects">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#cv">CV</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="about">
+        <!-- Your content here -->
+    </section>
+
+    <section id="projects">
+        <!-- Your content here -->
+    </section>
+
+    <section id="contact">
+        <!-- Your content here -->
+    </section>
+
+    <section id="cv">
+        <!-- Your content here -->
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>
